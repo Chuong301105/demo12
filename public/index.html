@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Care Services</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Thanh điều hướng -->
+    <header>
+        <nav>
+            <div class="logo">PetCare</div>
+            <ul class="nav-links">
+                <li><a href="#home">Trang chủ</a></li>
+                <li><a href="#services">Dịch vụ</a></li>
+                <li><a href="#products">Sản phẩm</a></li>
+                <li><a href="#contact">Liên hệ</a></li>
+                <li><a href="#register">Đăng nhập</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Banner chính -->
+    <section id="home" class="banner">
+        <div class="banner-text">
+            <h1>Chăm Sóc Thú Cưng Chuyên Nghiệp</h1>
+            <p>Chúng tôi mang đến dịch vụ chăm sóc tốt nhất cho thú cưng của bạn.</p>
+            <a href="#services" class="btn">Khám phá dịch vụ</a>
+        </div>
+    </section>
+
+    <!-- Khu vực dịch vụ -->
+    <section id="services" class="services">
+        <h2>Dịch Vụ Của Chúng Tôi</h2>
+        <div class="services-container">
+            <div class="service-item">
+                <h3>Spa Thú Cưng</h3>
+                <p>Dịch vụ spa chuyên nghiệp với liệu trình thư giãn cho thú cưng của bạn.</p>
+            </div>
+            <div class="service-item">
+                <h3>Huấn Luyện</h3>
+                <p>Chương trình huấn luyện bài bản, nâng cao sự thông minh cho thú cưng.</p>
+            </div>
+            <div class="service-item">
+                <h3>Giữ Thú Cưng</h3>
+                <p>Dịch vụ giữ thú cưng khi bạn đi xa với môi trường thoải mái, an toàn.</p>
+            </div>
+        </div>
+    </section>
+       
+    <!-- Khu vực sản phẩm -->
+    <section id="products" class="products">
+        <h2>Sản Phẩm</h2>
+        <div class="products-container">
+            <div class="product-item">
+                <img src="product1.jpg" alt="Thức ăn cho chó">
+                <h3>Thức Ăn Cho Chó</h3>
+            </div>
+            <div class="product-item">
+                <img src="product2.jpg" alt="Đồ chơi cho mèo">
+                <h3>Đồ Chơi Cho Mèo</h3>
+            </div>
+            <div class="product-item">
+                <img src="product3.jpg" alt="Phụ kiện cho thú cưng">
+                <h3>Phụ Kiện Cho Thú Cưng</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- Form dịch vụ -->
+    <section id="service-booking" class="contact">
+        <h2>Đặt dịch vụ chăm sóc thú cưng</h2>
+        <form id="serviceForm">
+            <label for="name">Tên của bạn</label>
+            <input type="text" id="name" name="name" required>
+    
+            <label for="phone">Số điện thoại</label>
+            <input type="text" id="phone" name="phone" required>
+    
+            <label for="email">Email của bạn</label>
+            <input type="email" id="email" name="email" required>
+    
+            <label for="pet">Loại thú cưng</label>
+            <select id="pet" name="pet" required>
+                <option value="dog">Chó</option>
+                <option value="cat">Mèo</option>
+                <option value="others">Khác</option>
+            </select>
+    
+            <div id="otherPetType" style="display: none;">
+                <label for="otherType">Loại thú cưng khác</label>
+                <input type="text" id="otherType" name="otherType">
+            </div>
+    
+            <!-- Dịch vụ -->
+            <label>Chọn dịch vụ</label>
+            <div class="checkbox-group">
+                <label>
+                    <input type="checkbox" name="services" value="Spa"> Spa
+                </label>
+                <label>
+                    <input type="checkbox" name="services" value="Training"> Huấn luyện
+                </label>
+                <label>
+                    <input type="checkbox" name="services" value="Boarding"> Giữ thú cưng
+                </label>
+            </div>
+    
+            <label for="homeService">Phục vụ tại nhà</label>
+            <select id="homeService" name="homeService">
+                <option value="no">Không</option>
+                <option value="yes">Có</option>
+            </select>
+    
+            <label for="pickUpService">Đón bé tại nhà</label>
+            <select id="pickUpService" name="pickUpService">
+                <option value="no">Không</option>
+                <option value="yes">Có</option>
+            </select>
+    
+            <div id="addressField" style="display: none;">
+                <input type="text" id="address" name="address" placeholder="Vui lòng nhập địa chỉ">
+            </div>            
+    
+            <label for="message">Tin nhắn</label>
+            <textarea id="message" name="message"></textarea>
+    
+            <button type="submit" class="btn">Gửi</button>
+        </form>
+        <p id="responseMessage"></p>
+    </section>    
+
+    <!-- Chân trang -->
+    <footer>
+        <p>© 2023 PetCare. All Rights Reserved.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
