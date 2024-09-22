@@ -11,28 +11,59 @@ body {
     color: #333;
 }
 
-/* Thanh điều hướng */
+/* Hiệu ứng thanh điều hướng */
 header {
-    background-color: #009ddc;
-    padding: 10px 0;
-    position: sticky; /* Đảm bảo thanh điều hướng luôn hiện trên cùng */
+    position: fixed;
+    width: 100%;
     top: 0;
+    left: 0;
     z-index: 1000;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    transition: background-color 0.5s ease, width 0.5s ease, height 0.5s ease, border-radius 0.5s ease;
 }
+
+/* Biến thành hình tròn khi cuộn */
+header.scrolled {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    justify-content: center;
+    background-color: #3498db; /* Thay màu mặc định của hình tròn nếu muốn */
+}
+
+/* Logo điều chỉnh kích thước khi cuộn */
+header .logo {
+    font-size: 1.5rem;
+    color: white;
+    transition: font-size 0.5s ease;
+}
+
+header.scrolled .logo {
+    font-size: 1rem; /* Giảm kích thước logo khi biến thành hình tròn */
+}
+
+/* Ẩn các liên kết khi thanh điều hướng biến thành hình tròn */
+.nav-links {
+    display: flex;
+    list-style: none;
+    transition: opacity 0.5s ease;
+}
+
+header.scrolled .nav-links {
+    display: none;
+}
+
 
 /* Navbar styles */
 nav {
     background: linear-gradient(to right, #00c6ff, #0072ff);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
 }
 
 nav .logo {
@@ -62,20 +93,49 @@ nav ul li a:hover {
     background: rgba(255, 255, 255, 0.2);
     border-radius: 5px;
 }
-
-/* Banner styles */
-/* Center Section Titles */
-h2 {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 20px;
+/* Effect to show form reset */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
 }
 
-/* Brighten the banner background */
+/* Apply the shake effect */
+.shake-effect {
+    animation: shake 0.5s;
+}
+/* Fade-out effect for success */
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.fade-out-success {
+    animation: fadeOut 2s forwards; /* Fades out after 2 seconds */
+}
+
+/* Response Message */
+#responseMessage {
+    color: green;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    display: none; /* Ẩn thông báo mặc định */
+}
+
+.error-message {
+    color: red;
+}
+
+/* Modal styles (giữ nguyên) */
+
+
+/* Banner styles */
 .banner {
     background: url('banner.jpg') no-repeat center center/cover;
     position: relative;
-    height: 60vh; /* Adjust to your preference */
+    height: 60vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -90,7 +150,7 @@ h2 {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.3); /* Brightening effect */
+    background: rgba(255, 255, 255, 0.3);
     z-index: 1;
 }
 
@@ -100,38 +160,14 @@ h2 {
     color: #fff;
 }
 
-/* Remove the button */
-.banner-text .btn {
-    display: none;
-}
-
 .banner h1 {
     font-size: 4rem;
     font-weight: bold;
-    z-index: 1;
 }
 
 .banner p {
     font-size: 1.5rem;
     margin-top: 10px;
-    z-index: 1;
-}
-
-.banner .btn {
-    background: #ff6f61;
-    padding: 10px 20px;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    margin-top: 20px;
-    font-size: 1.2rem;
-    z-index: 1;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.banner .btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Services Section */
@@ -192,49 +228,75 @@ h2 {
 }
 
 /* Form Section */
-.contact form {
+.contact form, .register form, .login form {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 20px;
-    padding: 50px;
+    padding: 30px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    max-width: 500px;
+    margin: 30px auto;
 }
 
-.contact form label {
-    grid-column: span 2;
+.contact form label, .register form label, .login form label {
     font-size: 1.2rem;
+    font-weight: bold;
 }
 
-.contact form input,
-.contact form select,
-.contact form textarea {
-    grid-column: span 2;
+.contact form input, .register form input, .login form input,
+.contact form select, .register form select, .login form select,
+.contact form textarea, .register form textarea {
     padding: 10px;
     font-size: 1.1rem;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-.contact form button {
-    grid-column: span 2;
+.contact form button, .register form button, .login form button {
     padding: 10px;
     background: #ff6f61;
     color: white;
     border: none;
     border-radius: 5px;
     font-size: 1.2rem;
+    cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.contact form button:hover {
+.contact form button:hover, .register form button:hover, .login form button:hover {
     transform: scale(1.05);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-#responseMessage {
-    color: green; /* Màu xanh lá cây */
+#responseMessage, #registerResponseMessage, #loginMessage {
+    color: green;
     font-weight: bold;
-    margin-top: 10px;
     text-align: center;
+}
+
+/* Hiển thị ẩn/hiện loại thú cưng khác */
+#otherPetType {
+    display: none;
+}
+
+/* Hiển thị ẩn/hiện địa chỉ khi chọn "Phục vụ tại nhà" */
+#addressField {
+    display: none;
+}
+
+/* Form đăng ký và đăng nhập */
+.register form, .login form {
+    margin-top: 50px;
+    max-width: 400px;
+}
+
+.register h2, .login h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: #0072ff;
 }
 
 /* Footer */
@@ -245,3 +307,118 @@ footer {
     color: white;
     margin-top: 50px;
 }
+
+/* Modal Content */
+/* CSS cho modal đăng nhập/đăng ký */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    align-items: center;
+}
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    position: absolute;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    max-width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.auth-btn {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    margin: 10px 5px;
+    font-size: 16px;
+}
+
+.auth-btn.active {
+    background-color: #007bff;
+}
+
+.auth-btn:hover {
+    background-color: #0056b3;
+}
+
+.auth-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.auth-form input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.auth-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.auth-form button:hover {
+    background-color: #218838;
+}
+
+.extra-options {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.auth-form {
+    display: none;
+}
+
+.auth-form.active {
+    display: block;
+}
+
+.close {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+#mainContent {
+    margin-top: 20px;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Other styles ... */

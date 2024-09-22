@@ -16,12 +16,13 @@
                 <li><a href="#home">Trang chủ</a></li>
                 <li><a href="#services">Dịch vụ</a></li>
                 <li><a href="#products">Sản phẩm</a></li>
-                <li><a href="#contact">Liên hệ</a></li>
-                <li><a href="#register">Đăng nhập</a></li>
+                <li><a href="#service-booking">Liên hệ</a></li>
+                <li><a href="#" id="loginButton">Đăng nhập</a></li>
             </ul>
         </nav>
     </header>
-
+    
+<div id="mainContent">
     <!-- Banner chính -->
     <section id="home" class="banner">
         <div class="banner-text">
@@ -74,13 +75,13 @@
         <h2>Đặt dịch vụ chăm sóc thú cưng</h2>
         <form id="serviceForm">
             <label for="name">Tên của bạn</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="name" name="name" placeholder="Nhập tên của bạn" required>
     
             <label for="phone">Số điện thoại</label>
-            <input type="text" id="phone" name="phone" required>
+            <input type="text" id="phone" name="phone" placeholder="Nhập số điện thoại của bạn" required>
     
             <label for="email">Email của bạn</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="email" placeholder="Nhập email của bạn" required>
     
             <label for="pet">Loại thú cưng</label>
             <select id="pet" name="pet" required>
@@ -91,7 +92,7 @@
     
             <div id="otherPetType" style="display: none;">
                 <label for="otherType">Loại thú cưng khác</label>
-                <input type="text" id="otherType" name="otherType">
+                <input type="text" id="otherType" name="otherType" placeholder="Nhập loại thú cưng khác">
             </div>
     
             <!-- Dịch vụ -->
@@ -125,19 +126,60 @@
             </div>            
     
             <label for="message">Tin nhắn</label>
-            <textarea id="message" name="message"></textarea>
+            <textarea id="message" name="message" placeholder="Nhập tin nhắn của bạn"></textarea>
     
             <button type="submit" class="btn">Gửi</button>
         </form>
         <p id="responseMessage"></p>
     </section>    
-
+</div>
+    <!-- Modal Đăng nhập/Đăng ký -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+    
+            <div class="auth-toggle">
+                <button id="loginTab" class="auth-btn active">Đăng nhập</button>
+                <button id="registerTab" class="auth-btn">Đăng ký</button>
+            </div>
+    
+            <div id="loginForm" class="auth-form active">
+                <h2>Đăng nhập</h2>
+                <form>
+                    <input type="email" id="loginEmail" placeholder="EMAIL" required>
+                    <input type="password" id="loginPassword" placeholder="Mật khẩu" required>
+                    <button type="submit">Đăng nhập</button>
+                </form>
+                <div id="loginMessage" style="display:none;"></div>
+                <div class="extra-options">
+                    <a href="#">Quên MK</a>
+                    <a id="switchToRegister" href="#">Đăng ký</a>
+                </div>
+            </div>
+    
+            <div id="registerForm" class="auth-form">
+                <h2>Đăng ký</h2>
+                <form>
+                    <input type="user" id="username" placeholder="Tên của bạn" required>
+                    <input type="email" id="registerEmail" placeholder="EMAIL" required>
+                    <input type="password" id="registerPassword" placeholder="Mật khẩu" required>
+                    <input type="password" id="confirmPassword" placeholder="Nhập lại mật khẩu" required>
+                    <button type="submit">Xác nhận</button>
+                </form>
+                <p id="registerResponseMessage" style="display:none;"></p> <!-- Hidden by default -->
+                <div class="extra-options">
+                    <a id="switchToLogin" href="#">Đăng nhập</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <!-- Chân trang -->
     <footer>
         <p>© 2023 PetCare. All Rights Reserved.</p>
     </footer>
-
     <!-- JavaScript -->
-    <script src="script.js"></script>
+    <script src="script.js"></script> <!-- Kết nối với file JS để xử lý form -->
+
 </body>
 </html>
