@@ -5,6 +5,23 @@ const cors = require('cors');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid'); // Import thư viện UUID để tạo ID duy nhất cho mỗi khách hàng
 const bcrypt = require('bcrypt'); // Import bcrypt để mã hóa mật khẩu
+const mysql = require('mysql2');
+// Tạo kết nối đến cơ sở dữ liệu MySQL bằng biến môi trường
+const db = mysql.createConnection({
+    host: process.env.DB_HOST, // Đọc biến môi trường DB_HOST
+    user: process.env.DB_USER, // Đọc biến môi trường DB_USER
+    password: process.env.DB_PASS, // Đọc biến môi trường DB_PASS
+    database: process.env.DB_NAME // Đọc biến môi trường DB_NAME
+});
+
+// Kiểm tra kết nối
+db.connect((err) => {
+    if (err) {
+        console.error('Error connecting to MySQL:', err.message);
+        return;
+    }
+    console.log('Connected to MySQL');
+});
 
 // Tạo ứng dụng Express
 const app = express();
@@ -112,45 +129,60 @@ app.post('/login', async (req, res) => {
     }
 });
 
-// API để xử lý yêu cầu POST từ form dịch vụ
-app.post('/submit-form', async (req, res) => {
-    const { name, phone, email, pet, otherType, services, homeService, pickUpService, address, message } = req.body;
+app.post('/submit-form', (req, res) => {
+    console.log(req.body); // In ra toàn bộ dữ liệu từ form để kiểm tra
+    const { name, phone, email, pet, otherType, services, homeService, pickUpService, address } = req.body;
 
+    // Kiểm tra các trường bắt buộc
     if (!name || !phone || !email || !pet) {
         return res.status(400).json({ success: false, message: "Tên, Số điện thoại, Email và Loại thú cưng là bắt buộc!" });
     }
 
+    // Tạo ID cho khách hàng
     const customerId = uuidv4();
-    const date = new Date().toISOString();
 
-    const customerData = { id: customerId, name, phone, email, pet, otherType, services, homeService, pickUpService, address, message, date };
-
-    try {
-        // Đọc dữ liệu từ file customers.json
-        let customers = [];
-        try {
-            const data = await fs.readFile('customers.json', 'utf8');
-            customers = JSON.parse(data);
-        } catch (err) {
-            if (err.code !== 'ENOENT') throw err;
-        }
-
-        // Thêm dữ liệu mới vào mảng
-        customers.push(customerData);
-
-        // Ghi dữ liệu mới vào file customers.json
-        await fs.writeFile('customers.json', JSON.stringify(customers, null, 2));
-
-        // Trả về phản hồi thành công
-        res.json({ success: true, message: "Dữ liệu đã được gửi và lưu thành công!" });
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ success: false, message: "Có lỗi xảy ra khi ghi dữ liệu!" });
+    // Kiểm tra nếu `services` là mảng, nếu không thì xử lý phù hợp
+    let selectedServices = '';
+    if (Array.isArray(services)) {
+        selectedServices = services.join(', '); // Nếu là mảng, gộp các dịch vụ thành chuỗi
+    } else if (typeof services === 'string') {
+        selectedServices = services; // Nếu là chuỗi, sử dụng trực tiếp
+    } else {
+        selectedServices = ''; // Nếu không có giá trị, để trống
     }
+
+    // Dữ liệu khách hàng sẽ được lưu vào cơ sở dữ liệu MySQL (bỏ cột created_at)
+    const query = `INSERT INTO customers (id, name, phone, email, pet, otherType, services, homeService, pickUpService, address) 
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`; // Đã bỏ cột 'message'
+    // Thực hiện câu lệnh SQL
+    db.query(query, [customerId, name, phone, email, pet, otherType, selectedServices, homeService, pickUpService, address], (err, result) => {
+        if (err) {
+            console.error('Error inserting customer data:', err);
+            return res.status(500).json({ success: false, message: "Có lỗi xảy ra khi ghi dữ liệu!" });
+        }
+        res.json({ success: true, message: "Dữ liệu đã được gửi và lưu thành công!" });
+    });
 });
+
 
 // Khởi động server
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
 });
+
+// Tạo kết nối đến MySQL
+/*const db = mysql.createConnection({
+    host: 'localhost',    // Sửa lại host đúng định dạng           
+    user: 'root',         // Thay bằng user MySQL của bạn (ví dụ: root)
+    password: 'Nhcdz123#', // Thay bằng mật khẩu MySQL của bạn
+    database: 'petcare_db' // Tên cơ sở dữ liệu bạn đã tạo
+});
+
+// Kết nối đến MySQL
+db.connect((err) => {
+    if (err) {
+        console.error('Error connecting to MySQL:', err.message); // Hiển thị thông báo lỗi cụ thể
+        return; // Thoát để không tiếp tục xử lý khi không kết nối được
+    }
+    console.log('Connected to MySQL');
+});*/

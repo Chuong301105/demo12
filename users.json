@@ -124,5 +124,11 @@
     "username": "1",
     "email": "1@12.com",
     "password": "$2b$10$i7BcFXcQ6Dek3ohITswkTeBAupfJ/hlughlkAR4PweVcnvXKSrzJa"
+  },
+  {
+    "id": "fddf63a1-5d8e-4d10-a07b-f82d8f5cef78",
+    "username": "11",
+    "email": "1@11.com",
+    "password": "$2b$10$CXJLesqRGZ12W8SD6ZY0yuWj0opNSJWyg52YbFHwPxl2uQZhuRpEG"
   }
 ]

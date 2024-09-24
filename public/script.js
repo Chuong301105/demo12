@@ -116,13 +116,23 @@ window.addEventListener('scroll', function () {
             phone: document.getElementById('phone').value,
             email: document.getElementById('email').value,
             pet: document.getElementById('pet').value,
-            otherType: petSelect.value === 'others' ? document.getElementById('otherType').value : '',
-            services: Array.from(document.querySelectorAll('input[name="services"]:checked')).map(el => el.value),
-            homeService: document.getElementById('homeService').value,
-            pickUpService: document.getElementById('pickUpService').value,
-            address: document.getElementById('address').value || '',
-            message: document.getElementById('message').value
+            otherType: document.getElementById('otherType').value,
+            services: [], // Mảng để lưu các dịch vụ đã chọn
+            homeService: document.getElementById('homeService').value === 'yes' ? 'Có' : 'Không', // Thay đổi 'yes' thành 'Có'
+            pickUpService: document.getElementById('pickUpService').value === 'yes' ? 'Có' : 'Không', // Thay đổi 'yes' thành 'Có'
+            address: document.getElementById('address').value,
+            
         };
+    
+        // Thu thập các dịch vụ đã chọn từ form
+        const selectedServices = [];
+        document.querySelectorAll('input[name="services"]:checked').forEach(checkbox => {
+        selectedServices.push(checkbox.value);
+        });
+
+        // Gộp các dịch vụ đã chọn thành một chuỗi phân cách bằng dấu phẩy
+        formData.services = selectedServices.join(', ');
+        console.log('Sending form data:', formData);
 
         // Gửi dữ liệu tới server
         fetch('/submit-form', {

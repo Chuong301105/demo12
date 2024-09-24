@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="dashboard.css"> <!-- Kết nối với file CSS -->
+    <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
 
-    <!-- Header hoặc menu điều hướng -->
+    <!-- Header với thanh điều hướng -->
     <header>
-        <nav>
-            <div class="logo">PetCare Dashboard</div>
+        <nav id="navbar">
+            <div class="logo" id="logoText">PetCare</div>
             <ul class="nav-links">
                 <li><a href="#">Trang chủ</a></li>
                 <li><a href="#">Dịch vụ</a></li>
@@ -20,19 +20,60 @@
             </ul>
         </nav>
     </header>
-
+        
     <!-- Nội dung chính của dashboard -->
     <main>
         <h1>Chào mừng bạn đến với Dashboard!</h1>
         <p>Đây là nội dung đặc biệt dành cho người dùng đã đăng nhập.</p>
         <p>Bạn có thể quản lý dịch vụ thú cưng và xem các thông tin cá nhân tại đây.</p>
+
+        <!-- Giao diện sau khi đăng nhập -->
+        <div class="dashboard-section">
+            <div class="card">
+                <div class="card-header">
+                    <img src="gift-icon.png" alt="Gift Icon" class="card-icon">
+                    <h3>Ưu đãi của bạn</h3>
+                </div>
+                <div class="card-body">
+                    <p>Điểm tích lũy: <span id="loyaltyPoints">0</span></p>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar">0%</div>
+                    </div>
+                    <p>Các ưu đãi hiện tại: <span id="userDiscounts">Không có ưu đãi nào</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-section">
+            <div class="card">
+                <div class="card-header">
+                    <img src="shopping-cart-icon.png" alt="Shopping Cart Icon" class="card-icon">
+                    <h3>Mua sắm sản phẩm</h3>
+                </div>
+                <div class="card-body">
+                    <button class="btn-primary" onclick="window.location.href='/products'">Mua sắm ngay</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="dashboard-section">
+            <div class="card">
+                <div class="card-header">
+                    <img src="pet-icon.png" alt="Pet Icon" class="card-icon">
+                    <h3>Theo dõi thú cưng của bạn</h3>
+                </div>
+                <div class="card-body">
+                    <p>Tên thú cưng: <span id="petName">Chưa có thú cưng</span></p>
+                    <p>Mức độ thân thiết với shop: <span id="loyaltyLevel">Chưa xác định</span></p>
+                </div>
+            </div>
+        </div>
     </main>
 
     <footer>
         <p>© 2023 PetCare. All Rights Reserved.</p>
     </footer>
 
-    <!-- Kết nối file JavaScript -->
     <script src="dashboard.js"></script>
 </body>
 </html>
