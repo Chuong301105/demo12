@@ -1,62 +1,62 @@
-// Lấy thông tin người dùng từ localStorage và kiểm tra
-const storedUser = localStorage.getItem('user');
-let user = null;
+document.addEventListener('DOMContentLoaded', function () {
+    const profileSection = document.getElementById('profileSection');
+    const notificationsSection = document.getElementById('notificationsSection');
+    const ordersSection = document.getElementById('ordersSection');
+    const voucherSection = document.getElementById('voucherSection');
 
-if (!storedUser) {
-    // Nếu chưa đăng nhập, chuyển hướng về trang chính
-    window.location.href = '/';
-} else {
-    // Chuyển chuỗi JSON trong localStorage thành đối tượng JavaScript
-    user = JSON.parse(storedUser);
-    showUserDashboard(user);
-}
-
-// Lấy thanh navbar
-const navbar = document.getElementById('navbar');
-
-// Kiểm tra trạng thái cuộn trang
-window.addEventListener('scroll', function() {
-    if (window.scrollY > 100) {
-        navbar.classList.add('scrolled'); // Thêm class để biến thanh thành hình tròn
-    } else {
-        navbar.classList.remove('scrolled'); // Trả lại về trạng thái ban đầu
-    }
-});
-
-// Cập nhật thanh tiến độ
-function updateProgressBar(points) {
-    const progressBar = document.getElementById('progressBar');
-    const progressPercentage = Math.min((points / 100) * 100, 100); // Giới hạn tối đa là 100%
-    progressBar.style.width = `${progressPercentage}%`;
-    progressBar.textContent = `${Math.round(progressPercentage)}%`;
-}
-
-// Xử lý sự kiện Đăng xuất
-document.getElementById('logoutButton').addEventListener('click', function() {
-    localStorage.removeItem('user');
-    window.location.href = '/'; // Chuyển hướng về trang chính
-});
-
-// Hiển thị thông tin dashboard cho người dùng
-function showUserDashboard(user) {
-    document.getElementById('loyaltyPoints').textContent = user.loyaltyPoints || 0;
-    updateProgressBar(user.loyaltyPoints);
-
-    if (user.discounts && user.discounts.length > 0) {
-        document.getElementById('userDiscounts').textContent = user.discounts.join(', ');
-    } else {
-        document.getElementById('userDiscounts').textContent = "Không có ưu đãi nào";
+    // Hàm để ẩn tất cả các phần
+    function hideAllSections() {
+        profileSection.style.display = 'none';
+        notificationsSection.style.display = 'none';
+        ordersSection.style.display = 'none';
+        voucherSection.style.display = 'none';
     }
 
-    document.getElementById('petName').textContent = user.petName || "Chưa có thú cưng";
-    document.getElementById('loyaltyLevel').textContent = user.loyaltyLevel || "Chưa xác định";
-}
+    // Hiển thị "Thông tin tài khoản" mặc định
+    hideAllSections(); // Ẩn tất cả các phần
+    profileSection.style.display = 'block'; // Hiển thị thông tin tài khoản mặc định
 
-// Cập nhật thanh tiến độ dựa trên điểm tích lũy
-function updateProgressBar(points) {
-    const progressBar = document.getElementById('progressBar');
-    const progressPercentage = isNaN(points) ? 0 : Math.min((points / 100) * 100, 100);
-    progressBar.style.width = `${progressPercentage}%`;
-    progressBar.innerHTML = `<span>${Math.round(progressPercentage)}%</span>`;  // Hiển thị phần trăm bên trong
-}
+    // Sự kiện khi nhấn vào "Thông tin tài khoản"
+    document.getElementById('accountInfoLink').addEventListener('click', function (event) {
+        event.preventDefault();
+        hideAllSections(); // Ẩn tất cả các phần
+        profileSection.style.display = 'block'; // Hiển thị thông tin tài khoản
+    });
 
+    // Sự kiện khi nhấn vào "Thông báo"
+    document.getElementById('notificationsLink').addEventListener('click', function (event) {
+        event.preventDefault();
+        hideAllSections(); // Ẩn tất cả các phần
+        notificationsSection.style.display = 'block'; // Hiển thị phần thông báo
+    });
+
+    // Sự kiện khi nhấn vào "Đơn mua"
+    document.getElementById('ordersLink').addEventListener('click', function (event) {
+        event.preventDefault();
+        hideAllSections(); // Ẩn tất cả các phần
+        ordersSection.style.display = 'block'; // Hiển thị phần đơn mua
+    });
+
+    // Sự kiện khi nhấn vào "Kho voucher"
+    document.getElementById('voucherLink').addEventListener('click', function (event) {
+        event.preventDefault();
+        hideAllSections(); // Ẩn tất cả các phần
+        voucherSection.style.display = 'block'; // Hiển thị phần kho voucher
+    });
+
+    // Sự kiện khi nhấn vào "Đăng xuất"
+    document.getElementById('logoutLink').addEventListener('click', function (event) {
+        event.preventDefault();
+        localStorage.removeItem('user');
+        window.location.href = '/'; // Chuyển hướng về trang chủ khi đăng xuất
+    });
+});
+
+document.getElementById('userButton').addEventListener('click', function () {
+    const dropdown = document.getElementById('dropdownMenu');
+    if (dropdown.style.display === 'block') {
+        dropdown.style.display = 'none';
+    } else {
+        dropdown.style.display = 'block';
+    }
+});
