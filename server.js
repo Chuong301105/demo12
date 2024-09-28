@@ -8,10 +8,11 @@ const bcrypt = require('bcrypt'); // Import bcrypt để mã hóa mật khẩu
 const mysql = require('mysql2');
 // Tạo kết nối đến cơ sở dữ liệu MySQL bằng biến môi trường
 const db = mysql.createConnection({
-    host: process.env.DB_HOST, // Đọc biến môi trường DB_HOST
-    user: process.env.DB_USER, // Đọc biến môi trường DB_USER
-    password: process.env.DB_PASS, // Đọc biến môi trường DB_PASS
-    database: process.env.DB_NAME // Đọc biến môi trường DB_NAME
+    host: process.env.DB_HOST || 'localhost',   // Thay bằng host của bạn
+    user: process.env.DB_USER || 'root',        // Thay bằng username của bạn
+    password: process.env.DB_PASS || 'Nhcdz123#',    // Thay bằng password của bạn
+    database: process.env.DB_NAME || 'petcare_db',// Thay bằng tên cơ sở dữ liệu của bạn
+    port: 3306 // hoặc port khác nếu bạn dùng port đặc biệt
 });
 
 // Kiểm tra kết nối
@@ -163,6 +164,27 @@ app.post('/submit-form', (req, res) => {
         res.json({ success: true, message: "Dữ liệu đã được gửi và lưu thành công!" });
     });
 });
+// === API mới để lưu hóa đơn vào bảng invoices ===
+// API để xử lý lưu dữ liệu vào bảng invoices
+app.post('/save-invoice', (req, res) => {
+    const { customer_name, customer_phone, customer_email, pet_type, services, total, payment_method } = req.body;
+
+    // Tạo câu lệnh SQL để chèn dữ liệu vào bảng invoices
+    const query = `
+        INSERT INTO invoices (customer_name, customer_phone, customer_email, pet_type, services, total, payment_method)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    // Thực hiện truy vấn để lưu thông tin hóa đơn
+    db.query(query, [customer_name, customer_phone, customer_email, pet_type, services, total, payment_method], (err, result) => {
+        if (err) {
+            console.error('Error inserting invoice data:', err);
+            return res.status(500).json({ success: false, message: 'Có lỗi xảy ra khi lưu hóa đơn!' });
+        }
+        console.log('Hóa đơn đã được lưu thành công vào MySQL');
+        res.status(200).json({ success: true, message: 'Hóa đơn đã được lưu thành công!' });
+    });
+});
 
 
 // Khởi động server
@@ -170,19 +192,3 @@ app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
 });
 
-// Tạo kết nối đến MySQL
-/*const db = mysql.createConnection({
-    host: 'localhost',    // Sửa lại host đúng định dạng           
-    user: 'root',         // Thay bằng user MySQL của bạn (ví dụ: root)
-    password: 'Nhcdz123#', // Thay bằng mật khẩu MySQL của bạn
-    database: 'petcare_db' // Tên cơ sở dữ liệu bạn đã tạo
-});
-
-// Kết nối đến MySQL
-db.connect((err) => {
-    if (err) {
-        console.error('Error connecting to MySQL:', err.message); // Hiển thị thông báo lỗi cụ thể
-        return; // Thoát để không tiếp tục xử lý khi không kết nối được
-    }
-    console.log('Connected to MySQL');
-});*/
