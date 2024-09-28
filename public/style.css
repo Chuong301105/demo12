@@ -65,6 +65,45 @@ nav {
     align-items: center;
     padding: 10px 20px;
 }
+/* Định dạng thanh menu */
+.navbar {
+    background-color: #00b4ff; /* Màu nền xanh */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+/* Định dạng cho các liên kết trong menu */
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 15px;
+    display: inline-block;
+}
+
+/* Định dạng nút Book ngay */
+.book-button {
+    background-color: #f28b82; /* Màu nền của nút */
+    color: white;
+    font-weight: bold; /* Chữ in đậm */
+    padding: 10px 20px; /* Khoảng cách bên trong nút */
+    text-align: center; /* Căn giữa chữ */
+    text-decoration: none; /* Loại bỏ gạch dưới */
+    border-radius: 10px; /* Góc bo tròn */
+    display: inline-block;
+}
+
+.book-button:hover {
+    background-color: #ff5252; /* Màu nền khi hover */
+}
+
+/* Định dạng container chứa logo và các liên kết */
+.navbar-items {
+    display: flex;
+    gap: 15px;
+}
 
 nav .logo {
     font-size: 1.8rem;
