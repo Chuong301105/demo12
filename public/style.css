@@ -157,7 +157,7 @@ nav ul li a:hover {
 .banner-text {
     position: relative;
     z-index: 2;
-    color: #fff;
+    color: #141111;
 }
 
 .banner h1 {
@@ -274,6 +274,59 @@ nav ul li a:hover {
     color: green;
     font-weight: bold;
     text-align: center;
+}
+
+/* Định dạng cơ bản cho receipt modal */
+#receipt-modal {
+    position: fixed;
+    right: -100%; /* Ban đầu nằm ngoài màn hình */
+    top: 0;
+    height: 100%;
+    width: 400px;
+    background-color: white;
+    box-shadow: -3px 0 10px rgba(0, 0, 0, 0.1);
+    transition: right 0.5s ease; /* Hiệu ứng trượt */
+    z-index: 1000;
+    padding: 20px;
+}
+
+/* Khi biên lai được hiển thị */
+#receipt-modal.show {
+    right: 0; /* Trượt vào màn hình từ bên phải */
+}
+/* CSS cho các thành phần trong biên lai */
+.receipt-modal h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+    text-align: center;
+}
+
+#service-summary {
+    margin-bottom: 20px;
+}
+
+.total-price {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#order-btn {
+    width: 100%;
+    background-color: #6200EA; /* Màu nút */
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
+
+#order-btn:hover {
+    background-color: #3700B3; /* Màu khi hover */
+}
+
+.payment-options {
+    margin-top: 15px;
 }
 
 /* Hiển thị ẩn/hiện loại thú cưng khác */
@@ -420,5 +473,8 @@ h1, h2, h3, h4, h5, h6 {
     padding: 20px;
     text-align: center;
 }
-
+#paypal-button-container {
+    display: none;
+  }
+  
 /* Other styles ... */
